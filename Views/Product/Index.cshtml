@@ -1,0 +1,62 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<h2>Produkt Katalog</h2>
+<p>Totala antalet produkter : @ViewBag.TotalProducts</p>
+<p>Medelpriset : @ViewBag.AveragePrice.ToString("C")</p>
+
+<a asp-action="Create">Skapa en produkt</a>
+
+<form asp-action="Index" method="get">
+    <label for="sortOrder">Sortera efter:</label>
+    <select name="sortOrder" id="sortOrder">
+        <option value="name">Namn</option>
+        <option value="price">Pris</option>
+        <option value="category">Kategori</option>
+    </select>
+    <button type="submit">Sortera</button>
+</form>
+
+
+@if (Model.Count == 0)
+{
+    <p>Ingen produkt tillgänglig</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Namn</th>
+                <th>Beskrivning</th>
+                <th>Pris</th>
+                <th>Kategori</th>
+                <th>Handlingar</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Description</td>
+                    <td>@product.Price.ToString("C")</td>
+                    <td>@product.Category</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@Model.IndexOf(product)">Redigera</a>
+                        <form asp-action="Delete" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@Model.IndexOf(product)" />
+                            <button type="submit">Ta bort</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

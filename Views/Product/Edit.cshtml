@@ -1,0 +1,30 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h2>Redigera</h2>
+
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <p style="color:red">@ViewBag.Error</p>
+}
+
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" name="id" value="@ViewBag.Id"/>
+    <input type="text" name="name" value="@Model.Name"/>
+    <input type="text" name="description" value="@Model.Description"/>
+    <input type="number" name="price" value="@Model.Price"/>
+    <select name="category">
+        <option value="Välj kategori"></option>
+        @foreach (var category in ViewBag.Categories)
+        {
+            <option value="@category">@category</option>
+        }
+    </select>
+    <button type="submit">Uppdatera</button>
+</form>
+
+<a asp-action="Index">Tillbaka till produktkatalogen</a>
